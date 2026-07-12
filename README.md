@@ -2,52 +2,58 @@
 # 🚀 AssetFlow — Enterprise Asset & Resource Management System
 
 <p align="center">
+  <img src="https://img.shields.io/badge/Odoo-Hackathon-purple?style=for-the-badge">
+  <img src="https://img.shields.io/badge/PHP-8.0+-777BB4?style=for-the-badge&logo=php">
+  <img src="https://img.shields.io/badge/MySQL-8.0-4479A1?style=for-the-badge&logo=mysql">
+  <img src="https://img.shields.io/badge/Bootstrap-5.3-7952B3?style=for-the-badge&logo=bootstrap">
+</p>
 
-![PHP](https://img.shields.io/badge/PHP-8.0+-777BB4?style=for-the-badge&logo=php)
-![MySQL](https://img.shields.io/badge/MySQL-8.0+-4479A1?style=for-the-badge&logo=mysql)
-![Bootstrap](https://img.shields.io/badge/Bootstrap-5.3-7952B3?style=for-the-badge&logo=bootstrap)
-![MIT](https://img.shields.io/badge/License-MIT-success?style=for-the-badge)
-
-Enterprise Asset & Resource Management System built for **Odoo Hackathon**.
+<p align="center">
+Enterprise Asset & Resource Management System built for the <b>Odoo Hackathon</b>.
 </p>
 
 ---
 
-# ✨ Features
+# 📖 Overview
 
-- 🔐 Authentication & Role Based Access
+AssetFlow is a complete enterprise solution for managing assets, resource bookings, maintenance, transfers, audits and analytics in one centralized platform.
+
+## ✨ Features
+
+- 🔐 Role Based Authentication
 - 📊 Dashboard with KPIs & Charts
-- 🏢 Department & Employee Management
-- 📦 Asset Registration & Tracking
-- 🔄 Allocation & Transfer Workflow
+- 🏢 Department Management
+- 📦 Asset Registration
+- 🔄 Allocation & Transfer
 - 📅 Resource Booking
-- 🔧 Maintenance Requests
-- 📋 Asset Audit
+- 🔧 Maintenance Workflow
+- 📋 Asset Audits
 - 📈 Reports & CSV Export
 - 🔔 Notifications
-- 🤖 AI Chatbot
+- 🤖 AI Assistant
 
-# 🎨 Design
+## 🎨 UI Highlights
 
-- Pastel UI
-- Glassmorphism
-- Responsive
-- Google Fonts (Inter)
+- Glassmorphism Design
+- Pastel Theme
+- Responsive Layout
+- Google Inter Font
 
-# 👥 User Roles
+## 👥 User Roles
 
-| Role | Access |
-|------|--------|
-| Admin | Full Access |
-| Asset Manager | Assets & Maintenance |
-| Department Head | Department Assets |
+| Role | Description |
+|------|-------------|
+| Admin | Complete system control |
+| Asset Manager | Assets, Allocation & Maintenance |
+| Department Head | Department approvals |
 | Employee | Booking & Requests |
 
-# 🚀 Installation
+## 🚀 Installation
 
 ```bash
-git clone https://github.com/Mayankkushwah1603/assetflow.git
-cd assetflow
+git clone https://github.com/Mayankkushwah1603/AssetFlow.git
+
+cd AssetFlow
 
 mysql -u root < database/schema.sql
 mysql -u root assetflow < database/seed.sql
@@ -55,101 +61,93 @@ mysql -u root assetflow < database/seed.sql
 php -S localhost:8000 -t public/
 ```
 
-Open:
+Visit
+
 ```
 http://localhost:8000
 ```
 
-# 📁 Project Structure
+## 📁 Project Structure
 
 ```text
-public/
-app/
-database/
-README.md
+AssetFlow/
+├── app/
+├── database/
+├── public/
+└── README.md
 ```
 
-# 🗃 Database
+## 🗄 Database
 
-14 Tables
+14 relational tables powering users, assets, maintenance, bookings, audits, notifications and chatbot rules.
 
-- users
-- departments
-- asset_categories
-- assets
-- allocations
-- transfer_requests
-- bookings
-- maintenance_requests
-- audit_cycles
-- audit_assignments
-- audit_items
-- notifications
-- activity_logs
-- chatbot_rules
+# 👨‍💻 Meet Our Team
 
-# 👨‍💻 Team
+> **Place your uploaded images inside `assets/team/` in your repository using these names:**
+> `jayraj.jpeg`, `shivam.png`, `mayank.jpeg`, `aliraza.png`
 
 <table>
 <tr>
-<td align="center">
-
-### Mayank Kushwah
-
-<a href="https://github.com/Mayankkushwah1603">
-<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" width="35"/>
-</a>
-&nbsp;
-<a href="https://www.linkedin.com/in/mayank-kushwah-36b926367">
-<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" width="35"/>
-</a>
-
-</td>
 
 <td align="center">
-
-### Jayraj Rathod
-
+<img src="assets/team/jayraj.jpeg" width="130"><br>
+<b>Jayraj Rathod</b><br><br>
 <a href="https://github.com/itsjayrajsinh">
-<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" width="35"/>
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" width="30">
 </a>
 &nbsp;
 <a href="https://www.linkedin.com/in/jayrajsinhrathod05">
-<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" width="35"/>
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" width="30">
 </a>
-
 </td>
 
 <td align="center">
-
-### Shivam Prajapati
-
+<img src="assets/team/shivam.png" width="130"><br>
+<b>Shivam Prajapati</b><br><br>
 <a href="https://github.com/itzshivam72">
-<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" width="35"/>
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" width="30">
 </a>
 &nbsp;
 <a href="https://www.linkedin.com/in/shivam-prajapati-1a94953b6">
-<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" width="35"/>
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" width="30">
 </a>
-
 </td>
 
 <td align="center">
+<img src="assets/team/mayank.jpeg" width="130"><br>
+<b>Mayank Kushwah</b><br><br>
+<a href="https://github.com/Mayankkushwah1603">
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" width="30">
+</a>
+&nbsp;
+<a href="https://www.linkedin.com/in/mayank-kushwah-36b926367">
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" width="30">
+</a>
+</td>
 
-### Aliraza Rahin
-
+<td align="center">
+<img src="assets/team/aliraza.png" width="130"><br>
+<b>Aliraza Rahin</b><br><br>
 <a href="https://github.com/AlirazaRahin2912">
-<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" width="35"/>
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" width="30">
 </a>
 &nbsp;
 <a href="https://www.linkedin.com/in/aliraza-rahin-8093a237a/">
-<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" width="35"/>
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" width="30">
 </a>
-
 </td>
+
 </tr>
 </table>
 
-# 📜 License
+## 📈 Roadmap
 
-MIT License
+- Mobile App
+- QR Code Asset Tracking
+- Email Notifications
+- AI Recommendations
+- Predictive Maintenance
+
+## 📜 License
+
+MIT License.
