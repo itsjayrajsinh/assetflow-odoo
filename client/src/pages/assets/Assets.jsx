@@ -40,8 +40,18 @@ export default function Assets() {
   });
 
   // ─── Export helpers ────────────────────────────────────────────────────────
-  const getRows = () =>
-    (data?.items || []).map((a) => ({
+  const fetchAllForExport = async () => {
+    try {
+      const res = await api.get('/assets', { params: { status, search, limit: 10000 } });
+      return res.data?.items || [];
+    } catch (e) {
+      toast.error('Failed to fetch data for export');
+      return [];
+    }
+  };
+
+  const getRows = (items) =>
+    (items || []).map((a) => ({
       Tag: a.assetTag,
       Name: a.name,
       Category: a.category?.name || '',
@@ -53,17 +63,20 @@ export default function Assets() {
       'Serial #': a.serialNumber || '',
     }));
 
-  const exportXlsx = () => {
-    const ws = XLSX.utils.json_to_sheet(getRows());
+  const exportXlsx = async () => {
+    const items = await fetchAllForExport();
+    if (!items.length) { toast.error('No data to export'); return; }
+    const ws = XLSX.utils.json_to_sheet(getRows(items));
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, 'Assets');
     XLSX.writeFile(wb, 'assets.xlsx');
     toast.success('Exported as XLSX');
   };
 
-  const exportCsv = () => {
-    const rows = getRows();
-    if (!rows.length) { toast.error('No data to export'); return; }
+  const exportCsv = async () => {
+    const items = await fetchAllForExport();
+    if (!items.length) { toast.error('No data to export'); return; }
+    const rows = getRows(items);
     const headers = Object.keys(rows[0]);
     const csv = [
       headers.join(','),
@@ -79,9 +92,10 @@ export default function Assets() {
     toast.success('Exported as CSV');
   };
 
-  const exportPdf = () => {
-    const rows = getRows();
-    if (!rows.length) { toast.error('No data to export'); return; }
+  const exportPdf = async () => {
+    const items = await fetchAllForExport();
+    if (!items.length) { toast.error('No data to export'); return; }
+    const rows = getRows(items);
     const doc = new jsPDF({ orientation: 'landscape' });
     doc.setFontSize(14);
     doc.text('Asset Register', 14, 15);
