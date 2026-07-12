@@ -90,7 +90,6 @@ AssetFlow/
 <tr>
 
 <td align="center">
-<img src="assets/team/jayraj.jpeg" width="130"><br>
 <b>Jayraj Rathod</b><br><br>
 <a href="https://github.com/itsjayrajsinh">
 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" width="30">
@@ -102,7 +101,6 @@ AssetFlow/
 </td>
 
 <td align="center">
-<img src="assets/team/shivam.png" width="130"><br>
 <b>Shivam Prajapati</b><br><br>
 <a href="https://github.com/itzshivam72">
 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" width="30">
@@ -114,7 +112,6 @@ AssetFlow/
 </td>
 
 <td align="center">
-<img src="assets/team/mayank.jpeg" width="130"><br>
 <b>Mayank Kushwah</b><br><br>
 <a href="https://github.com/Mayankkushwah1603">
 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" width="30">
@@ -126,7 +123,6 @@ AssetFlow/
 </td>
 
 <td align="center">
-<img src="assets/team/aliraza.png" width="130"><br>
 <b>Aliraza Rahin</b><br><br>
 <a href="https://github.com/AlirazaRahin2912">
 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" width="30">
@@ -140,13 +136,18 @@ AssetFlow/
 </tr>
 </table>
 
-## 📈 Roadmap
+## 🛠️ Additional Support
 
-- Mobile App
-- QR Code Asset Tracking
-- Email Notifications
-- AI Recommendations
-- Predictive Maintenance
+If you encounter any issues, have feature requests, or would like to contribute, feel free to reach out to our team through GitHub or LinkedIn.
+
+### Support Includes
+- 🐞 Bug Reporting
+- 💡 Feature Requests
+- 📚 Documentation Help
+- 🤝 Collaboration
+- ❓ Technical Assistance
+
+We welcome feedback and contributions to make **AssetFlow** even better.
 
 ## 📜 License
 
