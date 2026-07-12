@@ -83,6 +83,12 @@ html {
     scroll-behavior: smooth;
 }
 
+/* Global body styling:
+   - Sets the default font family and size
+   - Improves text readability with line-height
+   - Applies theme colors using CSS variables
+   - Enables font smoothing for better rendering
+   - Prevents horizontal scrolling */
 body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     font-size: 14px;
