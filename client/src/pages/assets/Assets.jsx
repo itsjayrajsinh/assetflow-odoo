@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import api from '../../services/api';
@@ -7,9 +7,11 @@ import PageHeader from '../../components/ui/PageHeader.jsx';
 import Modal from '../../components/ui/Modal.jsx';
 import StatusBadge from '../../components/ui/StatusBadge.jsx';
 import toast from 'react-hot-toast';
-import { Plus, Download } from 'lucide-react';
+import { Plus, Download, ChevronDown, FileSpreadsheet, FileText, FileDown } from 'lucide-react';
 import { hasRole, useAuth } from '../../store/auth';
 import * as XLSX from 'xlsx';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 
 export default function Assets() {
   const { user } = useAuth();
@@ -37,16 +39,78 @@ export default function Assets() {
     onError: (e) => toast.error(e.response?.data?.message || 'Failed'),
   });
 
-  const exportXlsx = () => {
-    const rows = (data?.items || []).map((a) => ({
-      Tag: a.assetTag, Name: a.name, Category: a.category?.name, Status: a.status,
-      Holder: a.currentHolder?.name || '', Location: a.location || '', Cost: a.acquisitionCost,
+  // ─── Export helpers ────────────────────────────────────────────────────────
+  const getRows = () =>
+    (data?.items || []).map((a) => ({
+      Tag: a.assetTag,
+      Name: a.name,
+      Category: a.category?.name || '',
+      Status: a.status?.replace(/_/g, ' ') || '',
+      Holder: a.currentHolder?.name || '',
+      Location: a.location || '',
+      Cost: a.acquisitionCost ?? '',
+      Condition: a.condition || '',
+      'Serial #': a.serialNumber || '',
     }));
-    const ws = XLSX.utils.json_to_sheet(rows);
+
+  const exportXlsx = () => {
+    const ws = XLSX.utils.json_to_sheet(getRows());
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, 'Assets');
     XLSX.writeFile(wb, 'assets.xlsx');
+    toast.success('Exported as XLSX');
   };
+
+  const exportCsv = () => {
+    const rows = getRows();
+    if (!rows.length) { toast.error('No data to export'); return; }
+    const headers = Object.keys(rows[0]);
+    const csv = [
+      headers.join(','),
+      ...rows.map((r) =>
+        headers.map((h) => `"${String(r[h]).replace(/"/g, '""')}"`).join(',')
+      ),
+    ].join('\n');
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = 'assets.csv'; a.click();
+    URL.revokeObjectURL(url);
+    toast.success('Exported as CSV');
+  };
+
+  const exportPdf = () => {
+    const rows = getRows();
+    if (!rows.length) { toast.error('No data to export'); return; }
+    const doc = new jsPDF({ orientation: 'landscape' });
+    doc.setFontSize(14);
+    doc.text('Asset Register', 14, 15);
+    doc.setFontSize(9);
+    doc.text(`Generated: ${new Date().toLocaleString()}`, 14, 22);
+    doc.autoTable({
+      startY: 28,
+      head: [['Tag', 'Name', 'Category', 'Status', 'Holder', 'Location', 'Cost', 'Condition']],
+      body: rows.map((r) => [
+        r.Tag, r.Name, r.Category, r.Status, r.Holder, r.Location,
+        r.Cost !== '' ? `₹${Number(r.Cost).toLocaleString()}` : '',
+        r.Condition,
+      ]),
+      styles: { fontSize: 8, cellPadding: 3 },
+      headStyles: { fillColor: [15, 23, 42], textColor: 255, fontStyle: 'bold' },
+      alternateRowStyles: { fillColor: [248, 250, 252] },
+    });
+    doc.save('assets.pdf');
+    toast.success('Exported as PDF');
+  };
+
+  // ─── Export dropdown state ─────────────────────────────────────────────────
+  const [exportOpen, setExportOpen] = useState(false);
+  const exportRef = useRef(null);
+  useEffect(() => {
+    const handler = (e) => { if (exportRef.current && !exportRef.current.contains(e.target)) setExportOpen(false); };
+    document.addEventListener('mousedown', handler);
+    return () => document.removeEventListener('mousedown', handler);
+  }, []);
 
   const canManage = hasRole(user, 'admin', 'asset_manager');
 
@@ -56,7 +120,37 @@ export default function Assets() {
         title="Assets"
         subtitle="Every asset — with tag, QR code and lifecycle status."
         actions={<>
-          <button className="btn-secondary" onClick={exportXlsx}><Download size={16} /> Export</button>
+          {/* Export dropdown */}
+          <div className="relative" ref={exportRef}>
+            <button
+              className="btn-secondary"
+              onClick={() => setExportOpen((v) => !v)}
+            >
+              <Download size={16} /> Export <ChevronDown size={14} />
+            </button>
+            {exportOpen && (
+              <div className="absolute right-0 mt-1 w-44 bg-white border border-slate-200 rounded-lg shadow-lg z-50 overflow-hidden">
+                <button
+                  className="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50"
+                  onClick={() => { exportXlsx(); setExportOpen(false); }}
+                >
+                  <FileSpreadsheet size={15} className="text-emerald-600" /> Excel (.xlsx)
+                </button>
+                <button
+                  className="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50"
+                  onClick={() => { exportCsv(); setExportOpen(false); }}
+                >
+                  <FileDown size={15} className="text-blue-600" /> CSV (.csv)
+                </button>
+                <button
+                  className="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50"
+                  onClick={() => { exportPdf(); setExportOpen(false); }}
+                >
+                  <FileText size={15} className="text-red-600" /> PDF (.pdf)
+                </button>
+              </div>
+            )}
+          </div>
           {canManage && <button className="btn-primary" onClick={() => setOpen(true)}><Plus size={16} /> Register Asset</button>}
         </>}
       />

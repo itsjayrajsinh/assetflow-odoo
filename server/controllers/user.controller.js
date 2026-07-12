@@ -25,12 +25,16 @@ export const getUser = asyncHandler(async (req, res) => {
 export const updateUser = asyncHandler(async (req, res) => {
   const u = await User.findById(req.params.id);
   if (!u) { res.status(404); throw new Error('User not found'); }
+  if (u._id.toString() !== req.user._id.toString() && req.user.role !== 'admin') {
+    res.status(403); throw new Error('Not authorized to update this user');
+  }
   const before = u.toObject();
-  const { name, phone, department, isActive, role } = req.body;
+  const { name, email, phone, department, isActive, role } = req.body;
   if (name !== undefined) u.name = name;
+  if (email !== undefined) u.email = email;
   if (phone !== undefined) u.phone = phone;
   if (department !== undefined) u.department = department || null;
-  if (isActive !== undefined) u.isActive = isActive;
+  if (isActive !== undefined && req.user.role === 'admin') u.isActive = isActive;
   if (role !== undefined && req.user.role === 'admin') u.role = role;
   await u.save();
   await logActivity({ user: req.user._id, action: 'update', entity: 'User', entityId: u._id, previousValue: before, newValue: u.toObject() });

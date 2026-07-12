@@ -13,6 +13,11 @@ import Assets from './pages/assets/Assets.jsx';
 import AssetDetail from './pages/assets/AssetDetail.jsx';
 import Allocations from './pages/allocations/Allocations.jsx';
 import Transfers from './pages/transfers/Transfers.jsx';
+import Bookings from './pages/bookings/Bookings.jsx';
+import Maintenance from './pages/maintenance/Maintenance.jsx';
+import Audit from './pages/audit/Audit.jsx';
+import Reports from './pages/reports/Reports.jsx';
+import Notifications from './pages/notifications/Notifications.jsx';
 
 export default function App() {
   return (
@@ -31,6 +36,11 @@ export default function App() {
         <Route path="/assets/:id" element={<AssetDetail />} />
         <Route path="/allocations" element={<Allocations />} />
         <Route path="/transfers" element={<Transfers />} />
+        <Route path="/bookings" element={<Bookings />} />
+        <Route path="/maintenance" element={<Maintenance />} />
+        <Route path="/audit" element={<Audit />} />
+        <Route path="/reports" element={<Reports />} />
+        <Route path="/notifications" element={<Notifications />} />
       </Route>
 
       <Route path="*" element={<Navigate to="/" replace />} />

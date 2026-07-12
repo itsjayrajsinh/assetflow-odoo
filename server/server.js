@@ -22,6 +22,10 @@ import transferRoutes from './routes/transfer.routes.js';
 import notificationRoutes from './routes/notification.routes.js';
 import activityRoutes from './routes/activity.routes.js';
 import dashboardRoutes from './routes/dashboard.routes.js';
+import bookingRoutes from './routes/booking.routes.js';
+import maintenanceRoutes from './routes/maintenance.routes.js';
+import auditRoutes from './routes/audit.routes.js';
+import reportsRoutes from './routes/reports.routes.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -59,6 +63,10 @@ app.use('/api/transfers', transferRoutes);
 app.use('/api/notifications', notificationRoutes);
 app.use('/api/activities', activityRoutes);
 app.use('/api/dashboard', dashboardRoutes);
+app.use('/api/bookings', bookingRoutes);
+app.use('/api/maintenance', maintenanceRoutes);
+app.use('/api/audits', auditRoutes);
+app.use('/api/reports', reportsRoutes);
 
 app.use(notFound);
 app.use(errorHandler);
